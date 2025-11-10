@@ -15,7 +15,7 @@ export async function executeQuery<T = unknown>(
 ): Promise<GraphQLResult<T>> {
   try {
     const result = (await graphqlClient.graphql({
-      query,
+      query: query as any,
       variables,
     })) as Promise<GraphQLResult<T>>;
     return result;
@@ -31,7 +31,7 @@ export async function executeMutation<T = unknown>(
 ): Promise<GraphQLResult<T>> {
   try {
     const result = (await graphqlClient.graphql({
-      query: mutation,
+      query: mutation as any,
       variables,
     })) as Promise<GraphQLResult<T>>;
     return result;

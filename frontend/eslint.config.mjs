@@ -25,14 +25,8 @@ const eslintConfig = [
   {
     files: ["lib/graphql/client.ts"],
     rules: {
-      // Allow @ts-expect-error in this file due to legitimate type conflicts
-      // between duplicate graphql package versions (root vs @aws-amplify nested)
-      "@typescript-eslint/ban-ts-comment": [
-        "error",
-        {
-          "ts-expect-error": "allow-with-description",
-        },
-      ],
+      // Allow 'any' type assertions to work around duplicate graphql package versions
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ];
