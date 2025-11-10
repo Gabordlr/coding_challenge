@@ -15,8 +15,6 @@ export async function executeQuery<T = unknown>(
   variables?: Record<string, unknown>
 ): Promise<GraphQLResult<T>> {
   try {
-    // @ts-expect-error - Type conflict between different GraphQL versions
-    // (one in root node_modules, one in @aws-amplify/api-graphql)
     const result = (await graphqlClient.graphql({
       query,
       variables,
@@ -33,8 +31,6 @@ export async function executeMutation<T = unknown>(
   variables?: Record<string, unknown>
 ): Promise<GraphQLResult<T>> {
   try {
-    // @ts-expect-error - Type conflict between different GraphQL versions
-    // (one in root node_modules, one in @aws-amplify/api-graphql)
     const result = (await graphqlClient.graphql({
       query: mutation,
       variables,
