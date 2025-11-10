@@ -2,16 +2,19 @@
 
 import { generateClient } from "aws-amplify/api";
 import type { GraphQLResult } from "@aws-amplify/api-graphql";
-import type { DocumentNode } from "graphql";
 
 // This will be configured via environment variables
 export const graphqlClient = generateClient();
 
+type GraphQLQuery = string | any;
+
 export async function executeQuery<T = unknown>(
-  query: string | DocumentNode,
+  query: GraphQLQuery,
   variables?: Record<string, unknown>
 ): Promise<GraphQLResult<T>> {
   try {
+    // @ts-ignore - Type conflict between different GraphQL versions
+    // (one in root node_modules, one in @aws-amplify/api-graphql)
     const result = (await graphqlClient.graphql({
       query,
       variables,
@@ -24,10 +27,12 @@ export async function executeQuery<T = unknown>(
 }
 
 export async function executeMutation<T = unknown>(
-  mutation: string | DocumentNode,
+  mutation: GraphQLQuery,
   variables?: Record<string, unknown>
 ): Promise<GraphQLResult<T>> {
   try {
+    // @ts-ignore - Type conflict between different GraphQL versions
+    // (one in root node_modules, one in @aws-amplify/api-graphql)
     const result = (await graphqlClient.graphql({
       query: mutation,
       variables,

@@ -9,7 +9,7 @@ const amplifyConfig = {
     GraphQL: {
       endpoint: process.env.NEXT_PUBLIC_APPSYNC_API_URL || "",
       region: process.env.NEXT_PUBLIC_AWS_REGION || "us-east-1",
-      defaultAuthMode: "apiKey", // Use API Key for GraphQL queries
+      defaultAuthMode: "apiKey" as const, // Use API Key for GraphQL queries
       apiKey: process.env.NEXT_PUBLIC_APPSYNC_API_KEY || "",
     },
   },

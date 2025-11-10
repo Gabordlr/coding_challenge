@@ -140,6 +140,24 @@ const eslintConfig = defineConfig([
     "cdk.out/**",
     "node_modules/**",
   ]),
+  {
+    files: ["frontend/**/*.{ts,tsx,js,jsx}"],
+    rules: {
+      // Disable no-html-link-for-pages rule since we're using App Router, not Pages Router
+      "@next/next/no-html-link-for-pages": "off",
+    },
+  },
+  {
+    files: ["frontend/lib/graphql/client.ts"],
+    rules: {
+      // Allow unknown type in this specific file due to GraphQL type conflicts
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      // Allow @ts-ignore due to type conflicts between GraphQL versions
+      "@typescript-eslint/ban-ts-comment": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
