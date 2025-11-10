@@ -78,7 +78,11 @@ type NoteQueryResults {
 }
 
 type Query {
-  getNotes(sentiment: Sentiment, limit: Int, nextToken: String): NoteQueryResults
+  getNotes(
+    sentiment: Sentiment
+    limit: Int
+    nextToken: String
+  ): NoteQueryResults
 }
 
 type Mutation {
