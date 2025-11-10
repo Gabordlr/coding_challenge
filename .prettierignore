@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+build
+dist
+cdk.out
+*.log
+.env*
+package-lock.json
+yarn.lock
+coverage
+*.min.js
+*.min.css
+
