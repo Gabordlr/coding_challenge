@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Next.js 16.0.4 configuration
+  // Enable React strict mode for better development experience
+  reactStrictMode: true,
 };
 
 export default nextConfig;

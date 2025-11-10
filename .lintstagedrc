@@ -1,5 +1,9 @@
 {
-  "*.{ts,tsx,js,jsx}": [
+  "frontend/**/*.{ts,tsx,js,jsx}": [
+    "bash .lint-staged-frontend.sh",
+    "prettier --write"
+  ],
+  "backend/**/*.{ts,tsx,js,jsx}": [
     "eslint --fix --config eslint.config.mjs",
     "prettier --write"
   ],
