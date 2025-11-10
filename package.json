@@ -1,0 +1,23 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Notes with Sentiment - Full Stack Application",
+  "scripts": {
+    "prepare": "husky",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "lint": "npm run lint --workspace=frontend",
+    "test": "npm run test --workspace=backend"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.3.3"
+  }
+}
