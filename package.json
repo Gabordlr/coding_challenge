@@ -4,7 +4,7 @@
   "private": true,
   "description": "Notes with Sentiment - Full Stack Application",
   "scripts": {
-    "prepare": "husky",
+    "prepare": "node -e \"try { require.resolve('husky'); require('child_process').execSync('husky', {stdio: 'inherit'}) } catch(e) {}\"",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "lint": "npm run lint --workspace=frontend",
