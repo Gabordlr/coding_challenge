@@ -22,6 +22,19 @@ const eslintConfig = [
       "@next/next/no-html-link-for-pages": "off",
     },
   },
+  {
+    files: ["lib/graphql/client.ts"],
+    rules: {
+      // Allow @ts-expect-error in this file due to legitimate type conflicts
+      // between duplicate graphql package versions (root vs @aws-amplify nested)
+      "@typescript-eslint/ban-ts-comment": [
+        "error",
+        {
+          "ts-expect-error": "allow-with-description",
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;
