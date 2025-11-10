@@ -1,4 +1,4 @@
-.PHONY: help install format format-check lint test test-watch test-coverage build clean dev-frontend dev-backend deploy-frontend deploy-backend all-tests all-checks
+.PHONY: help install format format-check lint test test-watch build clean dev-frontend dev-backend deploy-frontend deploy-backend all-checks
 
 # Default target
 help:
@@ -9,15 +9,13 @@ help:
 	@echo "  make lint             - Lint all code"
 	@echo "  make test             - Run all tests"
 	@echo "  make test-watch       - Run tests in watch mode"
-	@echo "  make test-coverage    - Run tests with coverage"
 	@echo "  make build            - Build frontend and backend"
 	@echo "  make build-frontend   - Build frontend only"
 	@echo "  make build-backend    - Build backend only"
 	@echo "  make clean            - Clean build artifacts"
 	@echo "  make dev-frontend     - Start frontend dev server"
-	@echo "  make dev-backend      - Start backend dev server (CDK watch)"
+	@echo "  make dev-backend      - Start backend TypeScript watch mode (auto-recompiles on changes)"
 	@echo "  make deploy-backend   - Deploy backend to AWS"
-	@echo "  make all-tests        - Run all tests (frontend + backend)"
 	@echo "  make all-checks       - Run format-check, lint, and tests"
 
 # Install dependencies
@@ -63,11 +61,6 @@ test-watch:
 	@echo "Running tests in watch mode..."
 	@cd backend && npm run test:watch
 
-# Run tests with coverage
-test-coverage:
-	@echo "Running tests with coverage..."
-	@cd backend && npm run test:coverage
-
 # Build everything
 build: build-backend build-frontend
 	@echo "Build complete!"
@@ -110,10 +103,6 @@ dev-backend:
 deploy-backend:
 	@echo "Deploying backend to AWS..."
 	@cd backend && npm run deploy
-
-# Run all tests (frontend + backend)
-all-tests: test
-	@echo "All tests complete!"
 
 # Run all checks (format, lint, tests)
 all-checks: format-check lint test
