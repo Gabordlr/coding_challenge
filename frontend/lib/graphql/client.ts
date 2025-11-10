@@ -14,9 +14,6 @@ export async function executeQuery<T = unknown>(
   variables?: Record<string, unknown>
 ): Promise<GraphQLResult<T>> {
   try {
-    // @ts-expect-error - Type conflict: Two different versions of 'graphql' package exist
-    // (root node_modules vs @aws-amplify/api-graphql/node_modules). Types are structurally
-    // identical but TypeScript sees them as incompatible. Works correctly at runtime.
     const result = (await graphqlClient.graphql({
       query,
       variables,
@@ -33,9 +30,6 @@ export async function executeMutation<T = unknown>(
   variables?: Record<string, unknown>
 ): Promise<GraphQLResult<T>> {
   try {
-    // @ts-expect-error - Type conflict: Two different versions of 'graphql' package exist
-    // (root node_modules vs @aws-amplify/api-graphql/node_modules). Types are structurally
-    // identical but TypeScript sees them as incompatible. Works correctly at runtime.
     const result = (await graphqlClient.graphql({
       query: mutation,
       variables,
