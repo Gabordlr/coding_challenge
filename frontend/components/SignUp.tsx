@@ -64,7 +64,6 @@ export default function SignUp({
         username: email,
         confirmationCode,
       });
-      // Automatically sign in the user after confirmation
       await signIn({
         username: email,
         password,

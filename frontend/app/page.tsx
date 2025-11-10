@@ -24,14 +24,10 @@ export default function Home() {
       const user = await getCurrentUser();
       const session = await fetchAuthSession();
 
-      // Try to get user ID from session token (Cognito sub)
-      // This is the actual user ID we need for filtering
       const userSub = session.tokens?.idToken?.payload?.sub as
         | string
         | undefined;
 
-      // Fallback to username if sub is not available
-      // Note: username might be the email, but we need the sub for filtering
       const userId = userSub || user.userId || user.username;
 
       console.log("User ID for filtering:", userId);
@@ -48,7 +44,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Configure Amplify when component mounts
     const configure = async () => {
       try {
         configureAmplify();
@@ -62,7 +57,6 @@ export default function Home() {
   }, []);
 
   const handleNoteCreated = () => {
-    // Trigger refresh of notes list
     setRefreshKey((prev) => prev + 1);
   };
 

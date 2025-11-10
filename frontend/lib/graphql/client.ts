@@ -4,7 +4,6 @@ import { generateClient } from "aws-amplify/api";
 import type { GraphQLResult } from "@aws-amplify/api-graphql";
 import type { DocumentNode } from "graphql";
 
-// This will be configured via environment variables
 export const graphqlClient = generateClient();
 
 type GraphQLQuery = string | DocumentNode;

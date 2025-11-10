@@ -5,7 +5,6 @@ const {
   ScanCommand,
 } = require("@aws-sdk/lib-dynamodb");
 
-// Mock AWS SDK
 jest.mock("@aws-sdk/lib-dynamodb", () => {
   const mockSend = jest.fn();
   return {

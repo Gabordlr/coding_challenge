@@ -3,7 +3,6 @@ const fetch = require("node-fetch");
 const API_URL = process.env.GRAPHQL_API_URL;
 const API_KEY = process.env.GRAPHQL_API_KEY;
 
-// Skip tests if API is not configured
 const describeIfConfigured = API_URL && API_KEY ? describe : describe.skip;
 
 describeIfConfigured("GraphQL API Integration Tests", () => {
@@ -129,7 +128,6 @@ describeIfConfigured("GraphQL API Integration Tests", () => {
 
   describe("getNotes query", () => {
     beforeAll(async () => {
-      // Create some test notes
       const sentiments = ["HAPPY", "SAD", "NEUTRAL", "ANGRY"];
       for (const sentiment of sentiments) {
         const response = await fetch(API_URL, {
@@ -150,7 +148,6 @@ describeIfConfigured("GraphQL API Integration Tests", () => {
         }
       }
 
-      // Wait a bit for eventual consistency
       await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
@@ -235,7 +232,6 @@ describeIfConfigured("GraphQL API Integration Tests", () => {
         createdNoteIds.push(userNoteResult.data.createNote.id);
       }
 
-      // Wait for eventual consistency
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const response = await fetch(API_URL, {

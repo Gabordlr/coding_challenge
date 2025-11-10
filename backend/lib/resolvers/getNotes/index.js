@@ -67,7 +67,6 @@ exports.handler = async (event) => {
 
     let result;
 
-    // If userId is provided, query by user (using userId GSI)
     if (userId) {
       const params = {
         TableName: process.env.NOTES_TABLE_NAME,
@@ -80,7 +79,6 @@ exports.handler = async (event) => {
         ScanIndexForward: false,
       };
 
-      // If sentiment filter is also provided, add a filter expression
       if (sentiment) {
         params.FilterExpression = "sentiment = :sentiment";
         params.ExpressionAttributeValues[":sentiment"] = sentiment;
@@ -101,8 +99,8 @@ exports.handler = async (event) => {
         ExpressionAttributeValues: {
           ":sentiment": sentiment,
         },
-        Limit: limitNum + 1, // Get one extra to check if there's more
-        ScanIndexForward: false, // Sort descending by dateCreated
+        Limit: limitNum + 1,
+        ScanIndexForward: false,
       };
 
       if (nextToken) {
@@ -135,7 +133,7 @@ exports.handler = async (event) => {
       if (!note.userId) {
         return {
           ...note,
-          userId: "anonymous", // Default userId for legacy notes
+          userId: "anonymous",
         };
       }
       return note;

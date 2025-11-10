@@ -54,7 +54,6 @@ export function useNotes(options: UseNotesOptions = {}): UseNotesReturn {
       token: string | null = null,
       filterUserId: string | null | undefined = undefined
     ) => {
-      // If filterUserId is not provided, determine it based on current filterByUser state
       const actualFilterUserId =
         filterUserId !== undefined
           ? filterUserId
@@ -65,17 +64,12 @@ export function useNotes(options: UseNotesOptions = {}): UseNotesReturn {
       setError(null);
 
       try {
-        // Build query variables - only include userId if explicitly filtering by user
         const variables: Record<string, unknown> = {
           limit: pageSize,
           nextToken: token,
           sentiment: sentiment === "all" ? null : sentiment,
         };
 
-        // Always include userId in variables
-        // If actualFilterUserId is provided, use it (for "My Notes")
-        // If actualFilterUserId is null, explicitly set to null (for "All Notes")
-        // Since we're using API key auth, we must pass userId explicitly
         variables.userId = actualFilterUserId || null;
 
         const result = await executeQuery<{ getNotes: NoteQueryResults }>(
@@ -125,8 +119,6 @@ export function useNotes(options: UseNotesOptions = {}): UseNotesReturn {
   const handleSetFilterByUser = useCallback(
     (filter: boolean) => {
       setFilterByUserState(filter);
-      // When filtering by user, we must pass userId explicitly
-      // When showing all notes, pass null explicitly
       const filterUserId = filter ? userId : null;
 
       if (filter && !userId) {

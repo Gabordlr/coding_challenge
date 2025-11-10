@@ -11,30 +11,26 @@ export class NotesAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // Create DynamoDB table for notes
     const notesTable = new dynamodb.Table(this, "NotesTable", {
       tableName: "Notes",
       partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "dateCreated", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // For development only
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    // Create GSI for sentiment filtering
     notesTable.addGlobalSecondaryIndex({
       indexName: "sentiment-dateCreated-index",
       partitionKey: { name: "sentiment", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "dateCreated", type: dynamodb.AttributeType.STRING },
     });
 
-    // Create GSI for user-based queries
     notesTable.addGlobalSecondaryIndex({
       indexName: "userId-dateCreated-index",
       partitionKey: { name: "userId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "dateCreated", type: dynamodb.AttributeType.STRING },
     });
 
-    // Create Cognito User Pool
     const userPool = new cognito.UserPool(this, "NotesUserPool", {
       userPoolName: "NotesUserPool",
       signInAliases: {
@@ -51,10 +47,9 @@ export class NotesAppStack extends cdk.Stack {
         requireDigits: true,
         requireSymbols: false,
       },
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // For development only
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    // Create User Pool Client
     const userPoolClient = new cognito.UserPoolClient(
       this,
       "NotesUserPoolClient",
@@ -68,7 +63,6 @@ export class NotesAppStack extends cdk.Stack {
       }
     );
 
-    // Create AppSync GraphQL API
     const api = new appsync.GraphqlApi(this, "NotesApi", {
       name: "NotesApi",
       definition: appsync.Definition.fromFile(
@@ -93,8 +87,6 @@ export class NotesAppStack extends cdk.Stack {
       xrayEnabled: true,
     });
 
-    // Create Lambda function for createNote mutation
-    // Using fromAsset without bundling - dependencies must be installed locally
     const createNoteFunction = new lambda.Function(this, "CreateNoteFunction", {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: "index.handler",
@@ -104,8 +96,6 @@ export class NotesAppStack extends cdk.Stack {
       },
     });
 
-    // Create Lambda function for getNotes query
-    // Using fromAsset without bundling - dependencies must be installed locally
     const getNotesFunction = new lambda.Function(this, "GetNotesFunction", {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: "index.handler",
@@ -115,11 +105,9 @@ export class NotesAppStack extends cdk.Stack {
       },
     });
 
-    // Grant permissions to Lambda functions
     notesTable.grantReadWriteData(createNoteFunction);
     notesTable.grantReadData(getNotesFunction);
 
-    // Create Lambda data sources
     const createNoteDataSource = api.addLambdaDataSource(
       "CreateNoteDataSource",
       createNoteFunction
@@ -130,7 +118,6 @@ export class NotesAppStack extends cdk.Stack {
       getNotesFunction
     );
 
-    // Create resolvers
     createNoteDataSource.createResolver("CreateNoteResolver", {
       typeName: "Mutation",
       fieldName: "createNote",
@@ -141,7 +128,6 @@ export class NotesAppStack extends cdk.Stack {
       fieldName: "getNotes",
     });
 
-    // Output the API URL and API Key
     new cdk.CfnOutput(this, "GraphQLAPIURL", {
       value: api.graphqlUrl,
       description: "GraphQL API URL",

@@ -1,7 +1,6 @@
 const { handler } = require("../index");
 const { DynamoDBDocumentClient, PutCommand } = require("@aws-sdk/lib-dynamodb");
 
-// Mock AWS SDK
 jest.mock("@aws-sdk/lib-dynamodb", () => {
   const mockSend = jest.fn();
   return {

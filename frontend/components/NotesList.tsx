@@ -37,7 +37,6 @@ export default function NotesList({ userId }: NotesListProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    // Use a consistent format to avoid hydration mismatches
     const months = [
       "January",
       "February",

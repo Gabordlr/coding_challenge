@@ -2,14 +2,12 @@
 
 import { Amplify } from "aws-amplify";
 
-// This will be configured via environment variables
-// Uses API Key for GraphQL queries, Cognito for user management
 const amplifyConfig = {
   API: {
     GraphQL: {
       endpoint: process.env.NEXT_PUBLIC_APPSYNC_API_URL || "",
       region: process.env.NEXT_PUBLIC_AWS_REGION || "us-east-1",
-      defaultAuthMode: "apiKey" as const, // Use API Key for GraphQL queries
+      defaultAuthMode: "apiKey" as const,
       apiKey: process.env.NEXT_PUBLIC_APPSYNC_API_KEY || "",
     },
   },

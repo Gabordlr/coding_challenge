@@ -5,10 +5,8 @@ const { DynamoDBDocumentClient, PutCommand } = require("@aws-sdk/lib-dynamodb");
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
-// Valid sentiment values
 const VALID_SENTIMENTS = ["happy", "sad", "neutral", "angry"];
 
-// Validation functions
 function validateText(text) {
   if (!text || typeof text !== "string") {
     throw new Error("Text is required and must be a string");
@@ -37,7 +35,6 @@ function validateSentiment(sentiment) {
 
 exports.handler = async (event) => {
   try {
-    // Validate input
     if (!event.arguments) {
       throw new Error("Missing arguments");
     }
